@@ -1,6 +1,16 @@
-# IoT Energy Monitoring System - Design Document
+# IoT Energy Monitoring System
 
-**Please view web version in [here](https://hackmd.io/@WesleyLeeNTU/HJRtBIcgJe).**
+## Table of Contents
+1. [Project Overview](#project-overview)
+2. [System Architecture](#technical-architecture)
+3. [Setup and Installation](#setup-and-installation)
+4. [Running the Application](#running-the-application)
+5. [API Documentation](#api-documentation)
+6. [Development Setup](#development-setup)
+7. [Testing Strategy](#testing-strategy)
+8. [Implementation Phases](#implementation-phases)
+9. [Success Metrics](#success-metrics)
+
 ## Project Overview
 The IoT Energy Monitoring System is a Spring Boot application designed to monitor and analyze energy consumption data from IoT devices. The system demonstrates basic CRUD operations, data analysis capabilities, and a clean architecture following OOP principles.
 
@@ -9,245 +19,108 @@ The IoT Energy Monitoring System is a Spring Boot application designed to monito
 - Energy managers tracking consumption patterns
 - Development teams looking to integrate energy monitoring capabilities
 
+## Setup and Installation
 
-### API Documentation
+### Docker Compose Setup
 
-### 1. Device Management
+#### Prerequisites
+- Docker
+- Docker Compose
 
-#### Register Device
-- **POST** `/api/devices`
-- **Request Body:**
-  ```json
-  {
-    "serialNumber": "DEV-2024-001",
-    "deviceType": "SMART_METER"
-  }
-  ```
-- **Response:** (201 Created)
-  ```json
-  {
-    "id": 1,
-    "serialNumber": "DEV-2024-001",
-    "deviceType": "SMART_METER",
-    "status": "ACTIVE",
-    "lastReportTime": "2024-03-20T10:30:00",
-    "lastEnergyReading": null
-  }
-  ```
+#### Steps to Run with Docker
 
-#### Get Device
-- **GET** `/api/devices/{id}`
-- **Response:** (200 OK)
-  ```json
-  {
-    "id": 1,
-    "serialNumber": "DEV-2024-001",
-    "deviceType": "SMART_METER",
-    "status": "ACTIVE",
-    "lastReportTime": "2024-03-20T10:30:00",
-    "lastEnergyReading": 120.5
-  }
-  ```
-
-#### List All Devices
-- **GET** `/api/devices`
-- **Response:** (200 OK)
-  ```json
-  [
-    {
-      "id": 1,
-      "serialNumber": "DEV-2024-001",
-      "deviceType": "SMART_METER",
-      "status": "ACTIVE",
-      "lastReportTime": "2024-03-20T10:30:00",
-      "lastEnergyReading": 120.5
-    }
-  ]
-  ```
-
-#### Update Device
-- **PUT** `/api/devices/{id}`
-- **Request Body:**
-  ```json
-  {
-    "deviceType": "SMART_METER_V2",
-    "serialNumber": "DEV-2024-001-UPDATED"
-  }
-  ```
-- **Response:** (200 OK)
-  ```json
-  {
-    "id": 1,
-    "serialNumber": "DEV-2024-001-UPDATED",
-    "deviceType": "SMART_METER_V2",
-    "status": "ACTIVE",
-    "lastReportTime": "2024-03-20T10:30:00",
-    "lastEnergyReading": 120.5
-  }
-  ```
-
-
-#### Update Device Status
-- **PUT** `/api/devices/{id}/status`
-- **Request Body:**
-  ```json
-  {
-    "status": "MAINTENANCE"
-  }
-  ```
-- **Response:** (200 OK)
-  ```json
-  {
-    "id": 1,
-    "serialNumber": "DEV-2024-001",
-    "deviceType": "SMART_METER",
-    "status": "MAINTENANCE",
-    "lastReportTime": "2024-03-20T12:00:00",
-    "lastEnergyReading": 120.5
-  }
-  ```
-
-
-#### Delete Device
-- **DELETE** `/api/devices/{id}`
-- **Response:** (204 No Content)
-
-### 2. Energy Data Management
-
-#### Record Energy Reading
-- **POST** `/api/devices/{id}/readings`
-- **Request Body:**
-  ```json
-  {
-    "value": 120.5
-  }
-  ```
-- **Response:** (200 OK)
-  ```json
-  {
-    "id": 1,
-    "deviceId": 1,
-    "deviceSerialNumber": "DEV-2024-001",
-    "value": 120.5,
-    "timestamp": "2024-03-20T12:05:00"
-  }
-  ```
-
-
-#### Get Device Readings
-- **GET** `/api/devices/{id}/readings`
-- **Query Parameters:**
-  - startDate: `2024-03-20T00:00:00`
-  - endDate: `2024-03-20T23:59:59`
-- **Response:** (200 OK)
-  ```json
-  [
-    {
-      "id": 1,
-      "deviceId": 1,
-      "deviceSerialNumber": "DEV-2024-001",
-      "value": 120.5,
-      "timestamp": "2024-03-20T10:30:00"
-    }
-  ]
-  ```
-
-
-#### Get Latest Reading
-- **GET** `/api/devices/{id}/readings/latest`
-- **Response:** (200 OK)
-  ```json
-  {
-    "id": 2,
-    "deviceId": 1,
-    "deviceSerialNumber": "DEV-2024-001",
-    "value": 125.8,
-    "timestamp": "2024-03-20T11:30:00"
-  }
-  ```
-
-#### Get Average Consumption
-- **GET** `/api/devices/{id}/readings/average`
-- **Response:** (200 OK)
-  ```json
-  123.15
-  ```
-
-### Error Responses
-
-#### Not Found (404)
-
-```json
-{
-"timestamp": "2024-03-20T12:00:00",
-"status": 404,
-  "error": "Not Found",
-  "message": "Device not found with ID: 1"
-}
-```
-
-#### Bad Request (400)
-```json
-{
-"timestamp": "2024-03-20T12:00:00",
-"status": 400,
-"error": "Bad Request",
-"message": "Serial number is required"
-}
-```
-
-## Testing Strategy
-
-## Test Coverage
-- **Model Layer**: Entity validation and business logic
-- **Repository Layer**: Data access and custom queries
-- **Service Layer**: Business operations and data transformations
-- **Controller Layer**: API endpoints and request/response handling
-- **DTO Layer**: Data validation and transformation
-
-### Test Categories
-1. **Unit Tests**
-   - Model validation
-   - Service logic
-   - Data transformations
-   - DTO validation
-
-2. **Integration Tests**
-   - Repository operations
-   - Database interactions
-   - API endpoints
-
-3. **Error Handling Tests**
-   - Invalid inputs
-   - Missing resources
-   - Duplicate entries
-
-
-### Running Tests
-
-#### Run All Tests
-
+1. Clone the repository:
 ```bash
-mvn test
+git clone https://github.com/your-username/iot-energy-monitoring.git
+cd iot-energy-monitoring
 ```
 
-### Run specific test category
+2. Create a `docker-compose.yml` file in the project root:
+```yaml
+version: '3.8'
+services:
+  mysql:
+    image: mysql:8.3.4
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: iot_monitoring
+      MYSQL_USER: iotuser
+      MYSQL_PASSWORD: iotpassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/iot_monitoring
+      - SPRING_DATASOURCE_USERNAME=iotuser
+      - SPRING_DATASOURCE_PASSWORD=iotpassword
+
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    ports:
+      - "8081:8080"
+    environment:
+      - SWAGGER_JSON=/app/swagger.json
+    volumes:
+      - ./swagger.json:/app/swagger.json
+
+volumes:
+  mysql-data:
+```
+
+3. Create a `Dockerfile` in the project root:
+```dockerfile
+FROM maven:3.8.1-openjdk-21-slim AS build
+WORKDIR /app
+COPY pom.xml .
+COPY src ./src
+RUN mvn clean package -DskipTests
+
+FROM openjdk:21-slim
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "app.jar"]
+```
+
+4. Run the application:
 ```bash
-mvn test -Dtest=DeviceServiceTest
-mvn test -Dtest=EnergyDataServiceTest
+docker-compose up --build
 ```
 
+#### Accessing the Application
+- Main Application: `http://localhost:8080`
+- Swagger UI: `http://localhost:8081`
+- MySQL Database: `localhost:3306`
 
-## Development Setup
+### Manual Setup
 
-### Requirements
+#### Prerequisites
 - JDK 21
 - Maven 3.8
 - MySQL 8.3.4
-- Spring Boot 3.x
-- H2 Database (for testing)
 
+#### Configuration
+Update `src/main/resources/application.properties`:
+```properties
+spring.datasource.url=jdbc:mysql://localhost:3306/iot_monitoring
+spring.datasource.username=root
+spring.datasource.password=password
+spring.jpa.hibernate.ddl-auto=update
+```
 
+#### Build and Run
+```bash
+mvn clean install
+mvn spring-boot:run
+```
 
 ## Technical Architecture
 
@@ -299,43 +172,68 @@ Domain Layer (Entity Layer)
 ```plaintext
 iot-energy-monitoring/
 ├── src/
-│   └── main/
-│       ├── java/
-│       │   └── com/
-│       │       └── example/
-│       │           └── iot/
-│       │               ├── IotApplication.java
-│       │               ├── config/
-│       │               │   └── AppConfig.java
-│       │               ├── controller/
-│       │               │   └── DeviceController.java
-│       │               ├── dto/
-│       │               │   ├── DeviceRegistrationRequest.java
-│       │               │   └── DeviceResponse.java
-│       │               ├── exception/
-│       │               │   ├── DeviceNotFoundException.java
-│       │               │   └── DuplicateDeviceException.java
-│       │               ├── model/
-│       │               │   ├── Device.java
-│       │               │   ├── DeviceStatus.java
-│       │               │   └── EnergyData.java
-│       │               ├── repository/
-│       │               │   ├── DeviceRepository.java
-│       │               │   └── EnergyDataRepository.java
-│       │               └── service/
-│       │                   └── DeviceService.java
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── com/
+│   │   │       └── example/
+│   │   │           └── iot/
+│   │   │               ├── IotApplication.java
+│   │   │               ├── controller/
+│   │   │               │   ├── DeviceController.java
+│   │   │               │   └── EnergyDataController.java
+│   │   │               ├── dto/
+│   │   │               │   ├── DeviceRegistrationRequest.java
+│   │   │               │   └── DeviceResponse.java
+│   │   │               ├── exception/
+│   │   │               │   ├── DeviceNotFoundException.java
+│   │   │               │   └── DuplicateDeviceException.java
+│   │   │               ├── model/
+│   │   │               │   ├── Device.java
+│   │   │               │   ├── DeviceStatus.java
+│   │   │               │   └── EnergyData.java
+│   │   │               ├── repository/
+│   │   │               │   ├── DeviceRepository.java
+│   │   │               │   └── EnergyDataRepository.java
+│   │   │               └── service/
+│   │   │                   ├── DeviceService.java
+│   │   │                   └── EnergyDataService.java
+│   │   └── resources/
+│   │       ├── application.properties
+│   │       ├── static/
+│   │       │   ├── css/
+│   │       │   │   └── styles.css
+│   │       │   ├── index.html
+│   │       │   └── js/
+│   │       │       ├── api.js
+│   │       │       └── app.js
+│   └── test/
+│       └── java/
+│           └── com/
+│               └── example/
+│                   └── iot/
+│                       ├── database/
+│                       │   └── DatabaseConnectionTest.java
+│                       ├── unit/
+│                       │   ├── controller/
+│                       │   │   ├── DeviceControllerTest.java
+│                       │   │   └── EnergyDataControllerTest.java
+│                       │   ├── dto/
+│                       │   │   └── DeviceRegistrationRequestTest.java
+│                       │   ├── model/
+│                       │   │   ├── DeviceTest.java
+│                       │   │   └── EnergyDataTest.java
+│                       │   ├── repository/
+│                       │   │   ├── DeviceRepositoryTest.java
+│                       │   │   └── EnergyDataRepositoryTest.java
+│                       │   └── service/
+│                       │       ├── DeviceServiceTest.java
+│                       │       └── EnergyDataServiceTest.java
 │       └── resources/
-│           └── application.properties
-└── test/
-    ├── java/
-    │   └── com/
-    │       └── example/
-    │           └── iot/
-    │               ├── controller/
-    │               ├── repository/
-    │               └── service/
-    └── resources/
-        └── application-test.properties
+│           └── application-test.properties
+└── target/
+    └── site/
+        └── apidocs/
+            └── index.html
 ```
 
 ### 3. Core Components
