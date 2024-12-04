@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IoT Energy Monitoring</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>IoT Energy Monitoring System</h1>
+        
+        <div class="section">
+            <h2>Devices</h2>
+            <button onclick="showAddDeviceForm()">Add Device</button>
+            <div id="devicesList"></div>
+            <div id="deviceDetails" class="device-details-section"></div>
+        </div>
+
+        <div class="section">
+            <h2>Energy Readings</h2>
+            <div class="readings-filter">
+                <input type="datetime-local" id="startDate" />
+                <input type="datetime-local" id="endDate" />
+                <button onclick="fetchReadings()">Get Readings</button>
+            </div>
+            <div id="readingsList"></div>
+        </div>
+    </div>
+
+    <!-- Add Device Modal -->
+    <div id="addDeviceModal" class="modal">
+        <div class="modal-content">
+            <h3>Add New Device</h3>
+            <form id="addDeviceForm">
+                <input type="text" id="serialNumber" placeholder="Serial Number" required>
+                <input type="text" id="deviceType" placeholder="Device Type" required>
+                <button type="submit">Add Device</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add after the Add Device Modal -->
+    <div id="deviceDetailsModal" class="modal">
+        <div class="modal-content">
+            <h3>Device Details</h3>
+            <div id="deviceDetailsContent"></div>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

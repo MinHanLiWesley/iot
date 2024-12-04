@@ -1,0 +1,168 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.section {
+    margin: 20px 0;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.device-card {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 10px 0;
+    background-color: #f9f9f9;
+}
+
+.device-card h3 {
+    margin-top: 0;
+    color: #333;
+}
+
+.device-card button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.device-card button:hover {
+    background-color: #45a049;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 5px;
+}
+
+input, button {
+    margin: 10px 0;
+    padding: 8px;
+    width: 100%;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.readings-filter {
+    margin: 20px 0;
+    display: flex;
+    gap: 10px;
+}
+
+.readings-filter input {
+    flex: 1;
+}
+
+.readings-filter button {
+    width: auto;
+}
+
+.readings-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.readings-table th, .readings-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.readings-table th {
+    background-color: #f5f5f5;
+}
+
+.device-details-section {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.device-details select {
+    margin-top: 10px;
+    padding: 8px;
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.status-container {
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.status-select {
+    padding: 6px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    background-color: white;
+    cursor: pointer;
+}
+
+.status-select option {
+    padding: 4px;
+}
+
+/* Status colors */
+.status-select option[value="ACTIVE"] {
+    color: #4CAF50;
+}
+
+.status-select option[value="INACTIVE"] {
+    color: #f44336;
+}
+
+.status-select option[value="MAINTENANCE"] {
+    color: #ff9800;
+}
+
+.device-details {
+    padding: 15px;
+}
+
+.device-details p {
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+.device-details strong {
+    color: #333;
+    display: inline-block;
+    width: 160px;
+}
